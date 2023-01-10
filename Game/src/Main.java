@@ -1,10 +1,9 @@
-import java.lang.reflect.Field;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
     private static Player player;
-    private static Enemy[] enemys = {new Enemy("Slime", 20, 0, -4)};
+    private static final Enemy[] enemys = {new Enemy("Slime", 20, 0, -4)};
 
     public Main() {
         player = new Player(inputString("Input the Player name : "));
@@ -25,12 +24,6 @@ public class Main {
                 currentTurn = 0;
             }
 
-            System.out.println(player.getHp() + "    " + enemys[enemyFightIndex].getHp());
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             if (enemys[enemyFightIndex].isDead()) {
                 System.out.println("U won the fight !!!");
                 enemys[enemyFightIndex].reset();
