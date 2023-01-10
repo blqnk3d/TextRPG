@@ -3,12 +3,15 @@ import java.util.Scanner;
 
 public class Main {
     private static Player player;
-    private static final Enemy[] enemys = {new Enemy("Slime", 20, 0, -4)};
+    private static final Enemy[] enemys = {new Enemy("Slime", 20, 0, 10)};
 
     public Main() {
         player = new Player(inputString("Input the Player name : "));
     }
 
+    public  Player getPlayer() {
+        return player;
+    }
 
     public void fight() {
         int currentTurn = 0; // 0 = Player | 1 = Enemy
@@ -26,6 +29,7 @@ public class Main {
 
             if (enemys[enemyFightIndex].isDead()) {
                 System.out.println("U won the fight !!!");
+                player.printHealth();
                 enemys[enemyFightIndex].reset();
                 break;
             }
@@ -40,6 +44,7 @@ public class Main {
             choose = inputString("What do u wish to do ? : ").toLowerCase();
             switch (choose) {
                 case "fight" -> game.fight();
+                case "printhp"-> game.getPlayer().printHealth();
                 case "quit" -> System.exit(0);
                 default -> System.out.println("Input not found please try again.");
             }
@@ -66,6 +71,10 @@ public class Main {
             System.out.println("Index : [" + i + "] --> " + enemys[i].getName());
         }
     }
+
+
+
+
 
     public static int inputInt(String msg) {
         Scanner scan = new Scanner(System.in);

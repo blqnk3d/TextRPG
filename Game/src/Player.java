@@ -1,4 +1,4 @@
-import com.sun.source.tree.BreakTree;
+
 
 public class Player {
     private String name ;
@@ -14,7 +14,7 @@ public class Player {
     public Player(String name  ) {
         this.name = name;
         this.hp = 100;
-        this.maxHP = hp+10;
+        this.maxHP = hp;
         this.defence = 5;
         this.attackDmg = 6;
 
@@ -24,6 +24,11 @@ public class Player {
         int damage = c * attack / (c + this.defence);
         this.setHp(this.getHp()-damage);
     }
+
+    public String getName() {
+        return name;
+    }
+
     public int getHp() {
         return hp;
     }
@@ -57,5 +62,19 @@ public class Player {
     }
     public boolean isDead(){
         return this.hp <= 0 ;
+    }
+    public String fill(double num,int max,char ch ){
+        String ret = "";
+        for (int i = 0; i < max-num; i++) {
+            ret = ret+ch;
+        }
+        return  ret;
+    }
+
+    public void printHealth(){
+        System.out.println(this.getHp()+"  /  "+this.getMaxHP());
+        double hpProz = this.getHp() / this.getMaxHP();
+        System.out.println(this.getName()+" : ["+fill(hpProz,100,'#')+"] | "+100*hpProz+"%");
+        System.out.println(this.getHp());
     }
 }
