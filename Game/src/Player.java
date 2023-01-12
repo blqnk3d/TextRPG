@@ -2,10 +2,14 @@
 
 public class Player {
     private String name ;
-    private int hp;
-    private int maxHP;
+    private double hp;
+    private double maxHP;
     private int defence;
     private int attackDmg;
+
+    private int lvl;
+
+    private int maxLvL
 
     private  int attackDodge;
 
@@ -29,19 +33,25 @@ public class Player {
         return name;
     }
 
-    public int getHp() {
+    public double getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
-        this.hp = Math.max(0,hp);
+    public void setHp(double hp) {
+        if (hp <= maxHP && hp >0){
+            this.hp = Math.max(0,hp);
+        } else if (hp < 0 ) {
+            this.hp = 0;
+        }else {
+            this.hp = maxHP;
+        }
     }
 
-    public int getMaxHP() {
+    public double getMaxHP() {
         return maxHP;
     }
 
-    public void updateMaxHp(int maxHP) {
+    public void updateMaxHp(double maxHP) {
         this.maxHP = getHp();
     }
 
@@ -74,7 +84,7 @@ public class Player {
     public void printHealth(){
         System.out.println(this.getHp()+"  /  "+this.getMaxHP());
         double hpProz = this.getHp() / this.getMaxHP();
-        System.out.println(this.getName()+" : ["+fill(hpProz,100,'#')+"] | "+100*hpProz+"%");
+        System.out.println(this.getName()+" : ["+fill(hpProz*100,100,'#')+"] | "+(100*hpProz)+"%");
         System.out.println(this.getHp());
     }
 }

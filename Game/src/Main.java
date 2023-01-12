@@ -28,8 +28,8 @@ public class Main {
             }
 
             if (enemys[enemyFightIndex].isDead()) {
-                System.out.println("U won the fight !!!");
                 player.printHealth();
+                System.out.println("U won the fight !!!");
                 enemys[enemyFightIndex].reset();
                 break;
             }
@@ -46,6 +46,7 @@ public class Main {
                 case "fight" -> game.fight();
                 case "printhp"-> game.getPlayer().printHealth();
                 case "quit" -> System.exit(0);
+                case "shop"->{}
                 default -> System.out.println("Input not found please try again.");
             }
         }
