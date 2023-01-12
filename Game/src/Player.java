@@ -9,7 +9,7 @@ public class Player {
 
     private int lvl;
 
-    private int maxLvL
+    private int maxLvL;
 
     private  int attackDodge;
 
@@ -18,7 +18,7 @@ public class Player {
     public Player(String name  ) {
         this.name = name;
         this.hp = 100;
-        this.maxHP = hp;
+        this.maxHP = hp+5;
         this.defence = 5;
         this.attackDmg = 6;
 
@@ -84,7 +84,7 @@ public class Player {
     public void printHealth(){
         System.out.println(this.getHp()+"  /  "+this.getMaxHP());
         double hpProz = this.getHp() / this.getMaxHP();
-        System.out.println(this.getName()+" : ["+fill(hpProz*100,100,'#')+"] | "+(100*hpProz)+"%");
+        System.out.println(this.getName()+" : ["+fill(hpProz*100,100,'#')+"] | "+Math.round(100*hpProz)+"%");
         System.out.println(this.getHp());
     }
 }
