@@ -1,9 +1,11 @@
+import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
     private Item[][] Inv = new Item[5][5];
-    private final Item[] ShopItems = {new Item("Low HealPot", 1, "heal0"), new Item("Mid HealPot", 1, "heal1"), new Item("Large HealPot", 1, "heal3")};
+    private final Item[] ShopItems = {new Item("Low HealPot", 1, "heal0",3), new Item("Mid HealPot", 1, "heal1",5), new Item("Large HealPot", 1, "heal3",7)};
     private static Player player;
     private static final Enemy[] enemys = {new Enemy("Slime", 20, 0, 10)};
 
@@ -35,7 +37,6 @@ public class Main {
                 break;
             }
         }
-        System.out.println("Sorry U lost all ur HP . ");
         // To-Do Make it so u can enter the shop and buy a revive if possible if not Exit.
     }
 
@@ -53,7 +54,40 @@ public class Main {
                     printItem(game.ShopItems);
                     Item item = game.shop(inputInt("Please enter the Index : "));
                     int [] last = game.findEndInf(game.Inv);
+                    // To-Do Change so it works with rows not collums and Formate
+                    System.out.println(Arrays.toString(last));
+
                     game.Inv[last[0]][last[1]] = item;
+                }
+                case "inventory"->{
+                    for (int x = 0; x < game.Inv.length; x++) {
+                        for (int y = 0; y < game.Inv[0].length; y++) {
+                            System.out.print(game.Inv[y][x]+" | ");
+                        }
+                        System.out.println();
+                    }
+                }
+                case "useitem"->{
+
+                    for (int x = 0; x < game.Inv.length; x++) {
+                        for (int y = 0; y < game.Inv[0].length; y++) {
+                            System.out.print(game.Inv[y][x]+" | ");
+                            if(x == 0 && y == game.Inv[0].length  ){
+                                System.out.print("<--- X");
+                            }
+                        }
+                        System.out.println();
+                    }
+                    int x = -1;
+                    int y = -1;
+                    try {
+                         x = inputInt("Please enter the X coordinate : ");
+                         y = inputInt("Please enter the Y coordinate : ");
+                    }catch (InputMismatchException i ){
+                        System.out.println("Please enter a number !");
+                    }
+                    player =  game.Inv[x][y].useItem(player);
+                    game.Inv [x][y] = null;
                 }
                 default -> System.out.println("Input not found please try again.");
             }
@@ -64,17 +98,17 @@ public class Main {
     public Item shop(int input) {
         switch (input) {
             case 0 -> {
-                return new Item("Low HealPot", 1, "heal0");
+                return ShopItems[0];
             }
             case 1 -> {
-                return new Item("Mid HealPot", 1, "heal1");
+                return ShopItems[1];
             }
             case 2 -> {
-                return new Item("Large HealPot", 1, "heal3");
+                return ShopItems[2];
             }
             default -> System.out.println("Index not Found");
         }
-        return new Item("",0,"");
+        return new Item("",0,"",1);
     }
 
     public int[] findEndInf(Item[][] Inv) {
@@ -82,9 +116,12 @@ public class Main {
         for (int y = 0; y < Inv.length; y++) {
             for (int x = 0; x < Inv[0].length; x++) {
                 if (Inv[y][x] == null) {
-                    ret[0] = x;
-                    ret[1] = y;
+                    ret[1] = x;
+                    ret[0] = y;
+                    System.out.println("findEndInf : "+Arrays.toString(ret));
+                    return ret;
                 }
+                System.out.println();
             }
         }
         return ret;
