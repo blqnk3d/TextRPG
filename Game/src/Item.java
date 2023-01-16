@@ -5,11 +5,23 @@ public class Item {
 
     private final int price;
 
-    public Item(String name, int amount, String type,int price) {
+    public Item(String name, int amount, String type, int price) {
         this.name = name;
         this.amount = amount;
         this.type = type;
         this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public Player useItem(Player player) {
@@ -28,6 +40,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "[" + name + "]"+"["+ amount +"]";
+        return "[" + name + "]" + "[" + amount + "]";
     }
 }

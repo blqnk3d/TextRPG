@@ -1,11 +1,10 @@
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
-    private Item[][] Inv = new Item[5][5];
-    private final Item[] ShopItems = {new Item("Low HealPot", 1, "heal0",3), new Item("Mid HealPot", 1, "heal1",5), new Item("Large HealPot", 1, "heal3",7)};
+    private Inventory Inv = new Inventory();
+    private final Item[] ShopItems = {new Item("Low HealPot", 1, "heal0", 3), new Item("Mid HealPot", 1, "heal1", 5), new Item("Large HealPot", 1, "heal3", 7)};
     private static Player player;
     private static final Enemy[] enemys = {new Enemy("Slime", 20, 0, 10)};
 
@@ -42,9 +41,9 @@ public class Main {
 
     public static void main(String[] args) {
         Main game = new Main();
-
         String choose;
         while (true) {
+            System.out.println("List of commands: fight   printhp   quit   shop   inventory   useitem[WIP]");
             choose = inputString("What do u wish to do ? : ").toLowerCase();
             switch (choose) {
                 case "fight" -> game.fight();
@@ -53,41 +52,34 @@ public class Main {
                 case "shop" -> {
                     printItem(game.ShopItems);
                     Item item = game.shop(inputInt("Please enter the Index : "));
-                    int [] last = game.findEndInf(game.Inv);
-                    // To-Do Change so it works with rows not collums and Formate
-                    System.out.println(Arrays.toString(last));
-
-                    game.Inv[last[0]][last[1]] = item;
+                    game.Inv.setItem(item);
+                    game.Inv.compresserInv(game.ShopItems);
                 }
-                case "inventory"->{
-                    for (int x = 0; x < game.Inv.length; x++) {
-                        for (int y = 0; y < game.Inv[0].length; y++) {
-                            System.out.print(game.Inv[y][x]+" | ");
-                        }
-                        System.out.println();
-                    }
+                case "inventory" -> {
+                    System.out.println(game.toString());
                 }
-                case "useitem"->{
+                case "useitem" -> {
 
-                    for (int x = 0; x < game.Inv.length; x++) {
-                        for (int y = 0; y < game.Inv[0].length; y++) {
-                            System.out.print(game.Inv[y][x]+" | ");
-                            if(x == 0 && y == game.Inv[0].length  ){
-                                System.out.print("<--- X");
-                            }
-                        }
-                        System.out.println();
-                    }
+                    System.out.println(game.Inv.toString());
+
                     int x = -1;
                     int y = -1;
                     try {
-                         x = inputInt("Please enter the X coordinate : ");
-                         y = inputInt("Please enter the Y coordinate : ");
-                    }catch (InputMismatchException i ){
+                        x = inputInt("Please enter the X coordinate : ");
+                        y = inputInt("Please enter the Y coordinate : ");
+                    } catch (InputMismatchException i) {
                         System.out.println("Please enter a number !");
                     }
+
+                    player = game.Inv.getInv()[y][x].useItem(player);
+                    /*
                     player =  game.Inv[x][y].useItem(player);
                     game.Inv [x][y] = null;
+
+                     */
+                }
+                case "debug" -> {
+
                 }
                 default -> System.out.println("Input not found please try again.");
             }
@@ -95,37 +87,16 @@ public class Main {
 
     }
 
+
     public Item shop(int input) {
-        switch (input) {
-            case 0 -> {
-                return ShopItems[0];
+        for (int i = 0; i < ShopItems.length; i++) {
+            if (input == i) {
+                return ShopItems[i];
             }
-            case 1 -> {
-                return ShopItems[1];
-            }
-            case 2 -> {
-                return ShopItems[2];
-            }
-            default -> System.out.println("Index not Found");
         }
-        return new Item("",0,"",1);
+        return new Item("", 0, "", 1);
     }
 
-    public int[] findEndInf(Item[][] Inv) {
-        int[] ret = new int[2];
-        for (int y = 0; y < Inv.length; y++) {
-            for (int x = 0; x < Inv[0].length; x++) {
-                if (Inv[y][x] == null) {
-                    ret[1] = x;
-                    ret[0] = y;
-                    System.out.println("findEndInf : "+Arrays.toString(ret));
-                    return ret;
-                }
-                System.out.println();
-            }
-        }
-        return ret;
-    }
 
     public static String inputString(String msg) {
         Scanner scan = new Scanner(System.in);
@@ -150,8 +121,6 @@ public class Main {
             System.out.println("Index : [" + i + "] --> " + items[i].getName());
         }
     }
-
-
 
 
     public static int inputInt(String msg) {
