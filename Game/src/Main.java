@@ -3,10 +3,21 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
-    private Inventory Inv = new Inventory();
-    private final Item[] ShopItems = {new Item("Low HealPot", 1, "heal0", 3), new Item("Mid HealPot", 1, "heal1", 5), new Item("Large HealPot", 1, "heal3", 7)};
+    private final Inventory Inv = new Inventory();
+    private final Item[] ShopItems = {new Item("Low HealPot", 1, "heal0", 3,"Heals 1 % of YOUR ma Hp"),
+                                      new Item("Mid HealPot", 1, "heal1", 5,"Heals 5 % of YOUR ma Hp"),
+                                      new Item("Large HealPot", 1, "heal3", 7,"Heals 10 % of YOUR ma Hp"),
+                                      new Item("Wooden Stick",1,"attack0",20,"Added +2 Damage to ur Attacks"),
+                                      new Item("Sword",1,"attack1",30,"Added +5 Damage to ur Attacks") ,
+                                      new Item("Wooden Plank",1,"defence0",20,"Added +2 Defence to ur Defence"),
+                                      new Item("Iron Shield",1,"defence1",30,"Added +5 Defence to ur Defence")
+
+
+    };
     private static Player player;
-    private static final Enemy[] enemys = {new Enemy("Slime", 20, 0, 10)};
+    private static final Enemy[] enemys = {new Enemy("Slime", 20, 0, 2,1,1),
+            new Enemy("Goblin", 100, 4, 5,4,7),
+            new Enemy("Ork", 150, 7, 20,9,3)};
 
     public Main() {
         player = new Player(inputString("Input the Player name : "));
@@ -36,31 +47,38 @@ public class Main {
                 break;
             }
         }
-        // To-Do Make it so u can enter the shop and buy a revive if possible if not Exit.
+        if (player.getLvl() >= player.getMaxLvL()) {
+            player.levelUp();
+        }
+        // ToDo Make it so u can enter the shop and buy a revive if possible if not Exit.
     }
 
     public static void main(String[] args) {
+
         Main game = new Main();
         String choose;
+
         while (true) {
             System.out.println("List of commands: fight   printhp   quit   shop   inventory   useitem[WIP]");
             choose = inputString("What do u wish to do ? : ").toLowerCase();
             switch (choose) {
+
                 case "fight" -> game.fight();
                 case "printhp" -> game.getPlayer().printHealth();
+
                 case "quit" -> System.exit(0);
+
                 case "shop" -> {
                     printItem(game.ShopItems);
                     Item item = game.shop(inputInt("Please enter the Index : "));
                     game.Inv.setItem(item);
-                    game.Inv.compresserInv(game.ShopItems);
+                    //game.Inv.compresserInv(game.ShopItems);
                 }
-                case "inventory" -> {
-                    System.out.println(game.toString());
-                }
+                case "inventory" -> System.out.println(game.Inv);
+
                 case "useitem" -> {
 
-                    System.out.println(game.Inv.toString());
+                    System.out.println(game.Inv);
 
                     int x = -1;
                     int y = -1;
@@ -72,11 +90,12 @@ public class Main {
                     }
 
                     player = game.Inv.getInv()[y][x].useItem(player);
-                    /*
-                    player =  game.Inv[x][y].useItem(player);
-                    game.Inv [x][y] = null;
+                    if (game.Inv.getInv()[y][x].getAmount() - 1 <= 0) {
+                        game.Inv.getInv()[y][x] = null;
+                    } else {
+                        game.Inv.getInv()[y][x].setAmount(game.Inv.getInv()[y][x].getAmount() - 1);
 
-                     */
+                    }
                 }
                 case "debug" -> {
 
@@ -94,7 +113,7 @@ public class Main {
                 return ShopItems[i];
             }
         }
-        return new Item("", 0, "", 1);
+        return new Item("", 0, "", 1,"");
     }
 
 

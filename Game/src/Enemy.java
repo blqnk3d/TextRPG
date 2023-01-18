@@ -1,19 +1,21 @@
 public class Enemy {
     private final String name;
-    private int hp;
-    private int maxHP;
-    private int defence;
-    private int attackDmg;
+    private double hp;
+    private double maxHP;
+    private double defence;
+    private double attackDmg;
 
+    private int exp;
     private final int[] resetData;
 
-    public Enemy(String name, int hp, int defence, int attackDmg) {
+    public Enemy(String name, int hp, int defence, int attackDmg,int exp,int coins) {
         this.name = name;
         this.hp = hp;
         this.defence = defence;
         this.attackDmg = attackDmg;
         this.maxHP = hp;
         this.resetData = new int[]{hp, defence, attackDmg};
+        this.exp
     }
 
     public void reset() {
@@ -23,9 +25,9 @@ public class Enemy {
         this.maxHP = this.hp;
     }
 
-    public void attacked(int attack) {
+    public void attacked(double attack) {
         int c = 100; // Constante
-        int damage = c * attack / (c + this.defence);
+        double damage = c * attack / (c + this.defence);
         this.setHp(this.getHp() - damage);
     }
 
@@ -33,15 +35,15 @@ public class Enemy {
         return name;
     }
 
-    public int getHp() {
+    public double getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
+    public void setHp(double hp) {
         this.hp = Math.max(0, hp);
     }
 
-    public int getMaxHP() {
+    public double getMaxHP() {
         return maxHP;
     }
 
@@ -49,7 +51,7 @@ public class Enemy {
         this.maxHP = getHp();
     }
 
-    public int getDefence() {
+    public double getDefence() {
         return defence;
     }
 
@@ -57,7 +59,7 @@ public class Enemy {
         this.defence = Math.max(this.defence, defence);
     }
 
-    public int getAttackDmg() {
+    public double getAttackDmg() {
         return attackDmg;
     }
 

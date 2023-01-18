@@ -1,7 +1,20 @@
-import java.util.Arrays;
-
 public class Inventory {
     private Item[][] Inv = new Item[5][5];
+
+    public static void main(String[] args) {
+        Item[] testShop = {new Item("test", 1, "heal0", 1,"")};
+        Inventory inv = new Inventory();
+        inv.setItem(new Item("test", 1, "heal0", 1,""));
+        inv.setItem(new Item("test", 1, "heal0", 1,""));
+        inv.setItem(new Item("test", 1, "heal0", 1,""));
+        inv.setItem(new Item("test", 1, "heal0", 1,""));
+        inv.setItem(new Item("test", 1, "heal0", 1,""));
+        inv.setItem(new Item("test", 1, "heal0", 1,""));
+        System.out.println(inv);
+        inv.compresserInv(testShop);
+        System.out.println(inv);
+
+    }
 
     public Item[][] getInv() {
         return Inv;
@@ -25,7 +38,6 @@ public class Inventory {
                 if (this.Inv[y][x] == null) {
                     ret[1] = x;
                     ret[0] = y;
-                    System.out.println("findEndInf : " + Arrays.toString(ret));
                     return ret;
                 }
                 System.out.println();
@@ -34,21 +46,23 @@ public class Inventory {
         return ret;
     }
 
-    public void compresserInv(Item[] ShopItems) { // TO-DO Check if an Ammount is 0 and delet it instant
+    public void compresserInv(Item[] ShopItems) {
         int[] count = new int[ShopItems.length];
 
         for (int i = 0; i < ShopItems.length; i++) {
             for (int j = 0; j < Inv.length; j++) {
                 for (int k = 0; k < Inv[0].length; k++) {
                     if (Inv[j][k] == ShopItems[i]) {
-                        count[i] += 1;
+
+                        count[i] += Inv[j][k].getAmount();
                     }
                 }
             }
         }
-        clearInv(); // Clears the inv and than adds the Items with the amount
+        clearInv(); // Clears the inv and then adds the Items with the amount
+        System.out.println(Inv);
         for (int i = 0; i < ShopItems.length; i++) {
-            setItem(new Item(ShopItems[i].getName(), ShopItems[i].getAmount(), ShopItems[i].getType(), ShopItems[i].getPrice()));
+            setItem(new Item(ShopItems[i].getName(), count[i], ShopItems[i].getType(), ShopItems[i].getPrice(),ShopItems[i].getDescription()));
         }
 
 
@@ -70,9 +84,10 @@ public class Inventory {
             for (int j = 0; j < Inv[0].length; j++) {
 
                 if (Inv[i][j] == null) {
-                    ret += fill("", 10, ' ') + "|";
+                    ret += fill("", 15, ' ') + "|";
                 } else {
-                    ret += fill(Inv[i][j].toString(), 10, ' ') + "|";
+
+                    ret += fill(Inv[i][j].toString(), 15, ' ') + "|";
                 }
             }
             ret += "\n";
@@ -80,20 +95,15 @@ public class Inventory {
         return ret;
     }
 
-    public String fill(String num, int max, char ch) {
-        String ret = "";
-        for (int i = 0; i < max - num.length(); i++) {
-            ret = ret + ch;
-        }
-        return ret;
-    }
-
     // TO-Do Get item methot to
 
-    public static void main(String[] args) {
-        Inventory inv = new Inventory();
+    public String fill(String num, int max, char ch) {
+        StringBuilder ret = new StringBuilder();
+        if (num != null) {
+            ret = new StringBuilder(num);
+        }
+        ret.append(String.valueOf(ch).repeat(Math.max(0, max - num.length())));
 
-        System.out.println(inv.toString());
-
+        return ret.toString();
     }
 }
