@@ -14,9 +14,11 @@ public class Item {
         this.type = type;
         this.price = price;
         this.description = decription;
+
     }
 
     public void setAmount(int amount) {
+
         this.amount = amount;
     }
 
@@ -37,18 +39,20 @@ public class Item {
     }
 
     public Player useItem(Player player) {
-        switch (this.type){
-           case "heal0"-> player.setHp(player.getHp()*1.01);
-            case "heal1"-> player.setHp(player.getHp()*1.05);
-            case "heal2"-> player.setHp(player.getHp()*1.1);
-            case "attack0"-> player.setAttackDmg(player.getAttackDmg()+2);
-            case "attack1"-> player.setAttackDmg(player.getAttackDmg()+5);
-            case "defence0"-> player.setDefence(player.getDefence()+2);
-            case "defence1"-> player.setDefence(player.getDefence()+5);
-           case default -> System.out.println("Type not found");
-
+        if(this.amount>0){
+            switch (this.type){
+                case "heal0"-> player.setHp(player.getHp()*1.01);
+                case "heal1"-> player.setHp(player.getHp()*1.05);
+                case "heal2"-> player.setHp(player.getHp()*1.1);
+                case "attack0"-> player.setAttackDmg(player.getAttackDmg()+2);
+                case "attack1"-> player.setAttackDmg(player.getAttackDmg()+5);
+                case "defence0"-> player.setDefence(player.getDefence()+2);
+                case "defence1"-> player.setDefence(player.getDefence()+5);
+                case "rev"-> player.setHp(player.getMaxHP());
+                case default -> System.out.println("Type not found");
+            }
+            this.amount -= 1 ;
         }
-
         return player;
     }
 

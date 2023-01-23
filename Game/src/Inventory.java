@@ -95,6 +95,20 @@ public class Inventory {
         return ret;
     }
 
+    public int[]findItemWType(String type){
+        int []ret = new int[2];
+        for (int row = 0; row < Inv[0].length; row++) {
+            for (int col = 0; col <Inv.length; col++) {
+                if(type == Inv[row][col].getType()){
+                    ret[1]=col;
+                    ret[0]=row;
+                 return ret ;
+                }
+            }
+        }
+        return null;
+    }
+
     // TO-Do Get item methot to
 
     public String fill(String num, int max, char ch) {

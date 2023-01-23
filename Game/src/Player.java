@@ -9,9 +9,12 @@ public class Player {
 
     private int lvl;
 
-    private int maxLvL;
+    private int maxExp;
 
-    private int attackDodge;
+    private int money;
+
+    private int maxlvl;
+    private  int currentLvl;
 
 
     public Player(String name) {
@@ -20,7 +23,9 @@ public class Player {
         this.maxHP = hp;
         this.defence = 5;
         this.attackDmg = 6;
-
+        this.money = 0;
+        this.maxExp =100;
+        this.maxlvl = 100;
     }
 
     public void attacked(double attack) {
@@ -72,32 +77,34 @@ public class Player {
     }
 
     public boolean isDead() {
-        return this.hp <= 0;
+        if(hp <= 1){
+            return true;
+        }else {
+            return false;
+        }
     }
 
-    public String fill(double num, int max, char ch) {
-        StringBuilder ret = new StringBuilder();
-        if (max - num == 1) {
-            ret.append(String.valueOf(ch).repeat(Math.max(0, max)));
-        }
-        for (int i = 0; i < max - num; i++) {
-            ret.append(ch);
-        }
-        return ret.toString();
-    }
-
-    public String fill(String num, int max, char ch) {
-        StringBuilder ret = new StringBuilder();
-        if (max - num.length() == 1) {
-            ret.append(String.valueOf(ch).repeat(Math.max(0, max)));
-        }
-        ret.append(String.valueOf(ch).repeat(Math.max(0, max - num.length())));
-        return ret.toString();
-    }
 
     public void printHealth() {
         double hpProz = 100 * (this.getHp() / this.getMaxHP());
         System.out.println(Barplot.drawBar("[ " + Barplot.drawLabel(this.name, 10) + " ]", Math.round((float) hpProz)));
+        System.out.println(this.hp);
+    }
+
+    public int getMaxExp() {
+        return maxExp;
+    }
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = Math.max(money,0);
     }
 
     public static void main(String[] args) {
@@ -108,23 +115,16 @@ public class Player {
 
     }
 
-    public int getMaxLvL() {
-        return maxLvL;
-    }
-
-    public int getLvl() {
-        return lvl;
-    }
-
     public void levelUp() {
-        if (lvl >= maxLvL) {
-            lvl -= maxLvL;
-            this.maxLvL *= 1.5;
+        if (lvl >= maxExp) {
+            lvl -= maxExp;
+            this.maxExp *= 1.5;
             switch (Main.inputString("Choose a stat you wannt to + 1% : \nAttack | Defence | MaxHP").toLowerCase()) {
                 case "attack" -> this.attackDmg *= 1.01;
                 case "defence" -> this.defence *= 1.01;
                 case "health" -> this.maxHP *= 1.01;
             }
+            currentLvl++;
         }
     }
 }

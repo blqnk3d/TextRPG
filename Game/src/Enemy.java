@@ -15,7 +15,7 @@ public class Enemy {
         this.attackDmg = attackDmg;
         this.maxHP = hp;
         this.resetData = new int[]{hp, defence, attackDmg};
-        this.exp
+        this.exp =exp;
     }
 
     public void reset() {
