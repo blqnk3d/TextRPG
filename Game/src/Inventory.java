@@ -26,12 +26,12 @@ public class Inventory {
 
     public void setItem(Item item) {
         if (item.getAmount() != 0) {
-            int[] coords = findEndInf();
+            int[] coords = findEndInv();
             this.Inv[coords[0]][coords[1]] = item;
         }
     }
 
-    public int[] findEndInf() {
+    public int[] findEndInv() {
         int[] ret = new int[2];
         for (int y = 0; y < this.Inv.length; y++) {
             for (int x = 0; x < this.Inv[0].length; x++) {
@@ -60,8 +60,9 @@ public class Inventory {
             }
         }
         clearInv(); // Clears the inv and then adds the Items with the amount
-        System.out.println(Inv);
+
         for (int i = 0; i < ShopItems.length; i++) {
+            System.out.println(count[i]);
             setItem(new Item(ShopItems[i].getName(), count[i], ShopItems[i].getType(), ShopItems[i].getPrice(),ShopItems[i].getDescription()));
         }
 

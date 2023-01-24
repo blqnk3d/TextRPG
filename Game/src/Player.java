@@ -31,7 +31,7 @@ public class Player {
     public void attacked(double attack) {
         int c = 100; // Constante
         double damage = c * attack / (c + this.defence);
-        this.setHp(this.getHp() - damage);
+        this.setHp(Math.round(this.getHp() - damage));
     }
 
     public String getName() {
@@ -84,6 +84,9 @@ public class Player {
         }
     }
 
+    public void printStats(){
+        //! NEEDS FINISH AND INPLEMENT IN MAIN
+    }
 
     public void printHealth() {
         double hpProz = 100 * (this.getHp() / this.getMaxHP());
