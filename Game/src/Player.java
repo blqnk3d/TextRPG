@@ -85,7 +85,13 @@ public class Player {
     }
 
     public void printStats(){
-        //! NEEDS FINISH AND INPLEMENT IN MAIN
+        System.out.println("--------------------");
+        System.out.println(name+" -> "+"LvL["+currentLvl+"]\n" +
+                "Current Health: "+hp+"\n"
+        +"Attack Stat : ["+attackDmg+"]\n"
+        +"Defence Stat : ["+defence+"]\n"
+        +"Current Money : ["+money+"]");
+        System.out.println("--------------------");
     }
 
     public void printHealth() {
