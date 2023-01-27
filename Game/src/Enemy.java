@@ -6,16 +6,18 @@ public class Enemy {
     private double attackDmg;
 
     private int exp;
+    private int coins;
     private final int[] resetData;
 
-    public Enemy(String name, int hp, int defence, int attackDmg,int exp,int coins) {
+    public Enemy(String name, int hp, int defence, int attackDmg, int exp, int coins) {
         this.name = name;
         this.hp = hp;
         this.defence = defence;
         this.attackDmg = attackDmg;
         this.maxHP = hp;
         this.resetData = new int[]{hp, defence, attackDmg};
-        this.exp =exp;
+        this.exp = exp;
+        this.coins = coins;
     }
 
     public void reset() {
@@ -69,5 +71,21 @@ public class Enemy {
 
     public boolean isDead() {
         return this.hp <= 0;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 }

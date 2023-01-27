@@ -14,7 +14,7 @@ public class Player {
     private int money;
 
     private int maxlvl;
-    private  int currentLvl;
+    private int currentLvl;
 
 
     public Player(String name) {
@@ -24,7 +24,7 @@ public class Player {
         this.defence = 5;
         this.attackDmg = 6;
         this.money = 0;
-        this.maxExp =100;
+        this.maxExp = 100;
         this.maxlvl = 100;
     }
 
@@ -77,27 +77,26 @@ public class Player {
     }
 
     public boolean isDead() {
-        if(hp <= 1){
+        if (hp <= 1) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
-    public void printStats(){
+    public void printStats() {
         System.out.println("--------------------");
-        System.out.println(name+" -> "+"LvL["+currentLvl+"]\n" +
-                "Current Health: "+hp+"\n"
-        +"Attack Stat : ["+attackDmg+"]\n"
-        +"Defence Stat : ["+defence+"]\n"
-        +"Current Money : ["+money+"]");
+        System.out.println(name + " -> " + "LvL[" + currentLvl + "]\n" +
+                "Current Health: " + hp + "\n"
+                + "Attack Stat : [" + attackDmg + "]\n"
+                + "Defence Stat : [" + defence + "]\n"
+                + "Current Money : [" + money + "]");
         System.out.println("--------------------");
     }
 
     public void printHealth() {
         double hpProz = 100 * (this.getHp() / this.getMaxHP());
-        System.out.println(Barplot.drawBar("[ " + Barplot.drawLabel(this.name, 10) + " ]", Math.round((float) hpProz)));
-        System.out.println(this.hp);
+        System.out.println((Inventory.fill(Barplot.drawBar("[ " + centerString(10,this.name) + " ]", Math.round((float) hpProz)), 116, ' ')) + "|   [" + this.hp + "]");
     }
 
     public int getMaxExp() {
@@ -113,11 +112,15 @@ public class Player {
     }
 
     public void setMoney(int money) {
-        this.money = Math.max(money,0);
+        this.money = Math.max(money, 0);
     }
 
     public static void main(String[] args) {
-        Player player = new Player("Test");
+        Player player = new Player("blqnk3d");
+        player.printHealth();
+        player.setHp(90);
+        player.printHealth();
+        player.setHp(95);
         player.printHealth();
         player.setHp(110);
         player.printHealth();
@@ -125,9 +128,9 @@ public class Player {
     }
 
     public void levelUp() {
-        if (lvl >= maxExp) {
-            lvl -= maxExp;
-            this.maxExp *= 1.5;
+        if (lvl >= this.maxlvl) {
+            lvl -= maxlvl;
+            this.maxlvl *= 1.5;
             switch (Main.inputString("Choose a stat you wannt to + 1% : \nAttack | Defence | MaxHP").toLowerCase()) {
                 case "attack" -> this.attackDmg *= 1.01;
                 case "defence" -> this.defence *= 1.01;
@@ -135,5 +138,8 @@ public class Player {
             }
             currentLvl++;
         }
+    }
+    public static String centerString (int width, String s) {
+        return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 }

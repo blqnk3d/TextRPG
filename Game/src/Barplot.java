@@ -1,19 +1,20 @@
 public class Barplot {
-    public static String repeat(char c, int n){
+    public static String repeat(char c, int n) {
         String ret = "";
         for (int i = 0; i < n; i++) {
             ret += c;
         }
-        return  ret;
+        return ret;
     }
-    public static String drawLabel(String label, int length){
-        if (label.length()>length){
+
+    public static String drawLabel(String label, int length) {
+        if (label.length() > length) {
             String lab = "";
             for (int i = 0; i < length; i++) {
                 lab += label.charAt(i);
             }
             return lab;
-        }else {
+        } else {
             int rest = length - label.length();
             for (int i = 0; i < rest; i++) {
                 label += " ";
@@ -21,16 +22,18 @@ public class Barplot {
             return label;
         }
     }
-    static String drawBar(String label, int value){
+
+    static String drawBar(String label, int value) {
         label +=
-                " | ";
-        if (value > 100){
+                " |";
+        if (value > 100) {
             return null;
-        }else {
+        } else {
             for (int i = 0; i < value; i++) {
                 label += "-";
             }
         }
+
         return label;
     }
 

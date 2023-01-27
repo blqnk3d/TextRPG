@@ -1,6 +1,7 @@
+import java.util.Arrays;
 import java.util.Objects;
 
-//ToDo Make Everything to a 1D Array and print it 2D
+
 public class Inventory {
     private Item[] Inv = new Item[25];
 
@@ -13,8 +14,6 @@ public class Inventory {
         inv.setItem(new Item("test", 1, "heal0", 1, ""));
         inv.setItem(new Item("test", 1, "heal0", 1, ""));
         inv.setItem(new Item("test", 1, "heal0", 1, ""));
-        System.out.println(inv);
-        inv.compresserInv(testShop);
         System.out.println(inv);
 
     }
@@ -48,8 +47,8 @@ public class Inventory {
         int[] count = new int[ShopItems.length];
 
         for (int i = 0; i < ShopItems.length; i++) {
-            for (int j = 0; j < Inv.length; j++) {
-                if (Inv[j] == ShopItems[i]) {
+            for (Item item : Inv) {
+                if (item == ShopItems[i]) {
                     count[i]++;
                 }
             }
@@ -65,48 +64,50 @@ public class Inventory {
     }
 
     public void clearInv() {
-        for (int i = 0; i < this.Inv.length; i++) {
-
-            this.Inv[i] = null;
-
-        }
+        Arrays.fill(this.Inv, null);
     }
 
     @Override
     public String toString() {
         String ret = "";
 
-        for (int i = 0; i < Inv.length; i++) {
-
-
-                if (Inv[i] == null) {
-                    ret += fill("", 15, ' ') + "|";
+        for (int i = 1; i < Inv.length + 1; i++) {
+            if (i % 5 != 0) {
+                if (Inv[i - 1] == null) {
+                    ret +=Player.centerString (15, " ") + "|";
                 } else {
+                    ret += Player.centerString(15,Inv[i - 1].toString()) + "|";
 
-                    ret += fill(Inv[i].toString(), 15, ' ') + "|";
+                }
+            } else {
+                if (Inv[i - 1] == null) {
+                    ret += Player.centerString (15, " ") + "|\n";
+                } else {
+                    ret += Player.centerString(15,Inv[i - 1].toString()) +"|\n";
+
                 }
             }
-            ret += "\n";
-
+        }
         return ret;
     }
 
     public int findItemWType(String type) {
-            for (int Index = 0; Index < Inv.length; Index++) {
-                if (Objects.equals(type, Inv[Index].getType())) {
-                    return Index;
-                }
+        for (int Index = 0; Index < Inv.length; Index++) {
+            if (Objects.equals(type, Inv[Index].getType())) {
+                return Index;
+            }
         }
         return -1;
     }
 
     // TO-Do Get item methot to
 
-    public String fill(String num, int max, char ch) {
+    public static String fill(String num, int max, char ch) {
         StringBuilder ret = new StringBuilder();
         if (num != null) {
             ret = new StringBuilder(num);
         }
+
         ret.append(String.valueOf(ch).repeat(Math.max(0, max - num.length())));
 
         return ret.toString();
