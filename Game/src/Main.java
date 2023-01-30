@@ -1,8 +1,12 @@
+import java.io.*;
+
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
+
     private static final Enemy[] enemys = {
             new Enemy("Giant Rat", 15, 5, 10, 10, 15),
             new Enemy("Slime", 20, 10, 10, 10, 15),
@@ -30,10 +34,11 @@ public class Main {
     };
 
     public Main() {
-        player = new Player(inputString("Input the Player name : "));
+            player = new Player(inputString("Input the Player name : "));
     }
 
     public static void main(String[] args) {
+
 
         Main game = new Main();
         String choose;
@@ -46,19 +51,15 @@ public class Main {
                 case "fight", "f" -> game.fight();
                 case "printhp", "php" -> game.getPlayer().printHealth();
 
-                case "quit", "q" -> System.exit(0);
+                case "quit", "q" -> {
+                    System.exit(0);
+                }
 
                 case "shop", "s" -> {
                     printItem(game.ShopItems);
                     Item item = game.shop(inputInt("Please enter the Index : "));
-                    if (item.getPrice() >= player.getMoney()) {
-                        player.setMoney(player.getMoney() - item.getPrice());
                         game.Inv.setItem(item);
                         //game.Inv.compresserInv(game.ShopItems);
-
-                    } else {
-                        System.out.println("Sorry but it seems that u dont have enough coins.");
-                    }
                 }
                 case "inventory", "inv" -> System.out.println(game.Inv);
 
@@ -134,6 +135,10 @@ public class Main {
         return player;
     }
 
+    public static void setPlayer(Player player) {
+        Main.player = player;
+    }
+
     public void fight() {
         int currentTurn = 0; // 0 = Player | 1 = Enemy
         printEnemys(enemys);
@@ -188,6 +193,7 @@ public class Main {
                 }
             }
         }
-        return new Item("", 0, "", 1, "");
+        return null;
     }
+
 }
