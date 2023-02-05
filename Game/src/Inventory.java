@@ -70,6 +70,8 @@ public class Inventory {
     @Override
     public String toString() {
         String ret = "";
+        String s = String.valueOf('-').repeat("                                                                                ".length()) + "\n";
+        ret += s;
 
         for (int i = 1; i < Inv.length + 1; i++) {
             if (i % 5 != 0) {
@@ -88,6 +90,7 @@ public class Inventory {
                 }
             }
         }
+        ret += s;
         return ret;
     }
 

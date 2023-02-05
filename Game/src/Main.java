@@ -2,7 +2,6 @@ import java.io.*;
 
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -73,8 +72,11 @@ public class Main {
                     } catch (InputMismatchException i) {
                         System.out.println("Please enter a number !");
                     }
-
-                    player = game.Inv.getInv()[coords].useItem(player);
+                    try{
+                        player = game.Inv.getInv()[coords].useItem(player);
+                    }catch (NullPointerException n){
+                        System.out.println("The is no item in that spot");
+                    }
                     if (game.Inv.getInv()[coords].getAmount() - 1 <= 0) {
                         game.Inv.getInv()[coords] = null;
                     } else {
@@ -143,6 +145,12 @@ public class Main {
         int currentTurn = 0; // 0 = Player | 1 = Enemy
         printEnemys(enemys);
         int enemyFightIndex = inputInt("Which Enemy do u wanna fight : ");
+        try{
+            enemys[enemyFightIndex].isDead();
+        }catch (ArrayIndexOutOfBoundsException ao){
+            System.out.println("Index out of range.");
+            return;
+        }
         while (!player.isDead()) {
             if (currentTurn == 0) {
                 enemys[enemyFightIndex].attacked(player.getAttackDmg());
@@ -157,13 +165,11 @@ public class Main {
                 System.out.println("U won the fight !!!");
                 player.setMoney(player.getMoney()+enemys[enemyFightIndex].getCoins());
                 enemys[enemyFightIndex].reset();
-                player.setHp(player.getMaxHP());
                 break;
             } else if (player.isDead()) {
                 //ToDo Here check if revive in Inv if not Exit with a System.exit(0)
                 System.out.println("Sorry but u lost that fight ");
                 System.out.println("Game will be now exiting");
-                player.setHp(player.getMaxHP());
                 //!System.exit(0);
         /*
         if(Inv.findItemWType("rev")!= null && Objects.equals(inputString("Do wanna Buy/Use a Revive?"), "yes")){
