@@ -18,14 +18,29 @@ public class Inventory {
 
     }
 
+    /**
+     * This function returns the value of the variable Inv.
+     *
+     * @return The array Inv is being returned.
+     */
     public Item[] getInv() {
         return Inv;
     }
 
+    /**
+     * This function sets the value of the variable Inv to the value of the variable inv.
+     *
+     * @param inv The inventory of the player.
+     */
     public void setInv(Item[] inv) {
         Inv = inv;
     }
 
+    /**
+     * If the item's amount is not 0, find the end of the inventory and set the item there
+     *
+     * @param item The item you want to add to the inventory.
+     */
     public void setItem(Item item) {
         if (item.getAmount() != 0) {
             int coords = findEndInv();
@@ -33,6 +48,11 @@ public class Inventory {
         }
     }
 
+    /**
+     * Find the first empty slot in the inventory.
+     *
+     * @return The index of the first empty slot in the inventory.
+     */
     public int findEndInv() {
         int ret = -1;
         for (int y = 0; y < this.Inv.length; y++) {
@@ -43,6 +63,12 @@ public class Inventory {
         return ret;
     }
 
+    /**
+     * It takes an array of items and counts how many of each item is in the inventory, then clears the inventory and adds
+     * the items back in with the correct amount
+     *
+     * @param ShopItems The items that are in the shop
+     */
     public void compresserInv(Item[] ShopItems) {
         int[] count = new int[ShopItems.length];
 
@@ -63,11 +89,15 @@ public class Inventory {
 
     }
 
+    /**
+     * It clears the inventory of the player
+     */
     public void clearInv() {
         Arrays.fill(this.Inv, null);
     }
 
     @Override
+    // Printing the inventory in a nice way.
     public String toString() {
         String ret = "";
         String s = String.valueOf('-').repeat("                                                                                ".length()) + "\n";
@@ -76,16 +106,16 @@ public class Inventory {
         for (int i = 1; i < Inv.length + 1; i++) {
             if (i % 5 != 0) {
                 if (Inv[i - 1] == null) {
-                    ret +=Player.centerString (15, " ") + "|";
+                    ret += Player.centerString(15, " ") + "|";
                 } else {
-                    ret += Player.centerString(15,Inv[i - 1].toString()) + "|";
+                    ret += Player.centerString(15, Inv[i - 1].toString()) + "|";
 
                 }
             } else {
                 if (Inv[i - 1] == null) {
-                    ret += Player.centerString (15, " ") + "|\n";
+                    ret += Player.centerString(15, " ") + "|\n";
                 } else {
-                    ret += Player.centerString(15,Inv[i - 1].toString()) +"|\n";
+                    ret += Player.centerString(15, Inv[i - 1].toString()) + "|\n";
 
                 }
             }
@@ -94,6 +124,13 @@ public class Inventory {
         return ret;
     }
 
+    /**
+     * This function takes a string as an argument and returns the index of the first item in the inventory that matches
+     * the string
+     *
+     * @param type The type of item you want to find.
+     * @return The index of the item in the inventory.
+     */
     public int findItemWType(String type) {
         for (int Index = 0; Index < Inv.length; Index++) {
             if (Objects.equals(type, Inv[Index].getType())) {
@@ -103,8 +140,16 @@ public class Inventory {
         return -1;
     }
 
-    // TO-Do Get item methot to
 
+    /**
+     * If the length of the string is less than the max, then fill the string with the character until it reaches the max
+     * length.
+     *
+     * @param num The number to be formatted.
+     * @param max The maximum length of the string.
+     * @param ch  The character to fill the string with.
+     * @return A string of the number with the character repeated to fill the max length.
+     */
     public static String fill(String num, int max, char ch) {
         StringBuilder ret = new StringBuilder();
         if (num != null) {

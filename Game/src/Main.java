@@ -1,4 +1,4 @@
-import java.io.*;
+
 
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
@@ -33,7 +33,7 @@ public class Main {
     };
 
     public Main() {
-            player = new Player(inputString("Input the Player name : "));
+        player = new Player(inputString("Input the Player name : "));
     }
 
     public static void main(String[] args) {
@@ -50,15 +50,13 @@ public class Main {
                 case "fight", "f" -> game.fight();
                 case "printhp", "php" -> game.getPlayer().printHealth();
 
-                case "quit", "q" -> {
-                    System.exit(0);
-                }
+                case "quit", "q" -> System.exit(0);
 
                 case "shop", "s" -> {
                     printItem(game.ShopItems);
                     Item item = game.shop(inputInt("Please enter the Index : "));
-                        game.Inv.setItem(item);
-                        //game.Inv.compresserInv(game.ShopItems);
+                    game.Inv.setItem(item);
+                    //game.Inv.compresserInv(game.ShopItems);
                 }
                 case "inventory", "inv" -> System.out.println(game.Inv);
 
@@ -72,9 +70,9 @@ public class Main {
                     } catch (InputMismatchException i) {
                         System.out.println("Please enter a number !");
                     }
-                    try{
+                    try {
                         player = game.Inv.getInv()[coords].useItem(player);
-                    }catch (NullPointerException n){
+                    } catch (NullPointerException n) {
                         System.out.println("The is no item in that spot");
                     }
                     if (game.Inv.getInv()[coords].getAmount() - 1 <= 0) {
@@ -113,9 +111,9 @@ public class Main {
     }
 
     public static void printItem(Item[] items) {
-        System.out.println(player.getName().toUpperCase()+" current Money : "+player.getMoney());
+        System.out.println(player.getName().toUpperCase() + " current Money : " + player.getMoney());
         for (int i = 0; i < items.length; i++) {
-            System.out.println("Index : [" + i + "] --> " +Inventory.fill(items[i].getName(),15,' ')+" ["+items[i].getPrice()+"$]");
+            System.out.println("Index : [" + i + "] --> " + Inventory.fill(items[i].getName(), 15, ' ') + " [" + items[i].getPrice() + "$]");
         }
     }
 
@@ -132,7 +130,6 @@ public class Main {
     }
 
 
-
     public Player getPlayer() {
         return player;
     }
@@ -145,9 +142,9 @@ public class Main {
         int currentTurn = 0; // 0 = Player | 1 = Enemy
         printEnemys(enemys);
         int enemyFightIndex = inputInt("Which Enemy do u wanna fight : ");
-        try{
+        try {
             enemys[enemyFightIndex].isDead();
-        }catch (ArrayIndexOutOfBoundsException ao){
+        } catch (ArrayIndexOutOfBoundsException ao) {
             System.out.println("Index out of range.");
             return;
         }
@@ -163,7 +160,7 @@ public class Main {
             if (enemys[enemyFightIndex].isDead()) {
                 player.printHealth();
                 System.out.println("U won the fight !!!");
-                player.setMoney(player.getMoney()+enemys[enemyFightIndex].getCoins());
+                player.setMoney(player.getMoney() + enemys[enemyFightIndex].getCoins());
                 enemys[enemyFightIndex].reset();
                 break;
             } else if (player.isDead()) {
@@ -191,10 +188,10 @@ public class Main {
     public Item shop(int input) {
         for (int i = 0; i < ShopItems.length; i++) {
             if (input == i) {
-                if (player.getMoney() >= ShopItems[input].getPrice()){
-                    player.setMoney(player.getMoney()-ShopItems[input].getPrice());
+                if (player.getMoney() >= ShopItems[input].getPrice()) {
+                    player.setMoney(player.getMoney() - ShopItems[input].getPrice());
                     return ShopItems[i];
-                }else {
+                } else {
                     System.out.println("Sorry but you dont have enouth money .");
                 }
             }

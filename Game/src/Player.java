@@ -1,7 +1,7 @@
 
 
 public class Player {
-    private String name;
+    private final String name;
     private double hp;
     private double maxHP;
     private double defence;
@@ -28,20 +28,41 @@ public class Player {
         this.maxlvl = 100;
     }
 
+    /**
+     * The damage is equal to the attack multiplied by a constant divided by the sum of the constant and the defence.
+     *
+     * @param attack The attack of the attacker
+     */
     public void attacked(double attack) {
         int c = 100; // Constante
         double damage = c * attack / (c + this.defence);
         this.setHp(Math.round(this.getHp() - damage));
     }
 
+    /**
+     * This function returns the name of the person.
+     *
+     * @return The name of the person.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * This function returns the value of the variable hp.
+     *
+     * @return The value of the hp variable.
+     */
     public double getHp() {
         return hp;
     }
 
+    /**
+     * If the hp is less than or equal to the maxHP and greater than 0, then set the hp to the max of 0 and hp. Otherwise,
+     * if the hp is less than 0, set the hp to 0. Otherwise, set the hp to maxHP
+     *
+     * @param hp The current health of the player.
+     */
     public void setHp(double hp) {
         if (hp <= maxHP && hp > 0) {
             this.hp = Math.max(0, hp);
@@ -52,38 +73,73 @@ public class Player {
         }
     }
 
+    /**
+     * This function returns the maxHP variable.
+     *
+     * @return The maxHP variable is being returned.
+     */
     public double getMaxHP() {
         return maxHP;
     }
 
+    /**
+     * This function updates the maxHP variable to the current HP value.
+     *
+     * @param maxHP The maximum HP of the entity.
+     */
     public void updateMaxHp(double maxHP) {
         this.maxHP = getHp();
     }
 
+    /**
+     * This function returns the value of the variable defence.
+     *
+     * @return The defence variable is being returned.
+     */
     public double getDefence() {
         return defence;
     }
 
+    /**
+     * If the new defence value is greater than the current defence value, then set the current defence value to the new
+     * defence value.
+     *
+     * @param defence The defence of the player.
+     */
     public void setDefence(double defence) {
         this.defence = Math.max(this.defence, defence);
     }
 
+    /**
+     * > This function returns the attack damage of the player
+     *
+     * @return The attackDmg variable.
+     */
     public double getAttackDmg() {
         return attackDmg;
     }
 
+    /**
+     * If the new attackDmg is greater than the current attackDmg, then set the current attackDmg to the new attackDmg.
+     *
+     * @param attackDmg The amount of damage the weapon does.
+     */
     public void setAttackDmg(double attackDmg) {
         this.attackDmg = Math.max(this.attackDmg, attackDmg);
     }
 
+    /**
+     * Returns true if the player's health is less than or equal to 1.
+     *
+     * @return The boolean value of whether the hp is less than or equal to 1.
+     */
     public boolean isDead() {
-        if (hp <= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return hp <= 1;
     }
 
+    /**
+     * This function prints out the stats of the player
+     */
     public void printStats() {
         System.out.println("--------------------");
         System.out.println(name + " -> " + "LvL[" + currentLvl + "]\n" +
@@ -94,23 +150,46 @@ public class Player {
         System.out.println("--------------------");
     }
 
+    /**
+     * It prints a barplot of the current health of the player
+     */
     public void printHealth() {
         double hpProz = 100 * (this.getHp() / this.getMaxHP());
-        System.out.println((Inventory.fill(Barplot.drawBar("[ " + centerString(10,this.name) + " ]", Math.round((float) hpProz)), 116, ' ')) + "|   [" + this.hp + "]");
+        System.out.println((Inventory.fill(Barplot.drawBar("[ " + centerString(10, this.name) + " ]", Math.round((float) hpProz)), 116, ' ')) + "|   [" + this.hp + "]");
     }
 
+    /**
+     * This function returns the maxExp variable.
+     *
+     * @return The maxExp variable is being returned.
+     */
     public int getMaxExp() {
         return maxExp;
     }
 
+    /**
+     * This function returns the value of the variable lvl
+     *
+     * @return The value of the variable lvl.
+     */
     public int getLvl() {
         return lvl;
     }
 
+    /**
+     * This function returns the value of the money variable.
+     *
+     * @return The money variable is being returned.
+     */
     public int getMoney() {
         return money;
     }
 
+    /**
+     * If the money is less than 0, set it to 0.
+     *
+     * @param money The amount of money the player has.
+     */
     public void setMoney(int money) {
         this.money = Math.max(money, 0);
     }
@@ -127,6 +206,12 @@ public class Player {
 
     }
 
+    /**
+     * If the player's level is greater than or equal to the maximum level, then the player's level is set to the remainder
+     * of the player's level divided by the maximum level, the maximum level is multiplied by 1.5, the player's attack
+     * damage, defence, or maximum health is multiplied by 1.01 depending on the player's choice, and the player's current
+     * level is incremented by 1
+     */
     public void levelUp() {
         if (lvl >= this.maxlvl) {
             lvl -= maxlvl;
@@ -139,7 +224,16 @@ public class Player {
             currentLvl++;
         }
     }
-    public static String centerString (int width, String s) {
-        return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
+
+    /**
+     * It takes a string and a width, and returns a string that is the original string centered in a string of the given
+     * width
+     *
+     * @param width The width of the entire string
+     * @param s     The string to be centered
+     * @return A string that is centered in a string of a given width.
+     */
+    public static String centerString(int width, String s) {
+        return String.format("%-" + width + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 }

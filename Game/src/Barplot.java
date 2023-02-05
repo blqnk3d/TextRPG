@@ -1,24 +1,16 @@
 public class Barplot {
-    public static String repeat(char c, int n) {
-        String ret = "";
-        for (int i = 0; i < n; i++) {
-            ret += c;
-        }
-        return ret;
-    }
+
 
     public static String drawLabel(String label, int length) {
         if (label.length() > length) {
-            String lab = "";
+            StringBuilder lab = new StringBuilder();
             for (int i = 0; i < length; i++) {
-                lab += label.charAt(i);
+                lab.append(label.charAt(i));
             }
-            return lab;
+            return lab.toString();
         } else {
             int rest = length - label.length();
-            for (int i = 0; i < rest; i++) {
-                label += " ";
-            }
+            label = label + " ".repeat(rest);
             return label;
         }
     }
@@ -29,9 +21,7 @@ public class Barplot {
         if (value > 100) {
             return null;
         } else {
-            for (int i = 0; i < value; i++) {
-                label += "-";
-            }
+            label = label + "-".repeat(Math.max(0, value));
         }
 
         return label;
