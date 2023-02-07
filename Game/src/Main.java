@@ -33,7 +33,8 @@ public class Main {
     };
 
     public Main() {
-        player = new Player(inputString("Input the Player name : "));
+        //! inputString("Input the Player name : ")
+        player = new Player("test");
     }
 
     public static void main(String[] args) {
@@ -43,6 +44,7 @@ public class Main {
         String choose;
 
         while (true) {
+            //ToDo Crafting Menu
             System.out.println("List of commands: fight [f]   printhp [php]   quit [q]   shop [s]   inventory [inv]   useitem [ui] stats");
             choose = inputString("What do u wish to do ? : ").toLowerCase();
             switch (choose) {
@@ -139,6 +141,7 @@ public class Main {
     }
 
     public void fight() {
+        //ToDo Item Dropps of Mobs
         int currentTurn = 0; // 0 = Player | 1 = Enemy
         printEnemys(enemys);
         int enemyFightIndex = inputInt("Which Enemy do u wanna fight : ");

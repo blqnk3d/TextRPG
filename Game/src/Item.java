@@ -7,7 +7,7 @@ public class Item {
     private final int price;
 
     private final String description;
-
+    //ToDo Constructor fuer dropped Items
     public Item(String name, int amount, String type, int price, String decription) {
         this.name = name;
         this.amount = amount;
