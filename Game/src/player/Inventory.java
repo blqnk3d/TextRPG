@@ -1,3 +1,5 @@
+package player;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -42,7 +44,7 @@ public class Inventory {
      * @param item The item you want to add to the inventory.
      */
     public void setItem(Item item) {
-        if (item.getAmount() != 0) {
+        if (item != null && item.getAmount() != 0) {
             int coords = findEndInv();
             this.Inv[coords] = item;
         }
@@ -160,24 +162,25 @@ public class Inventory {
 
         return ret.toString();
     }
-    public  int findIndex(String itemName){
+
+    public int findIndex(String itemName) {
         for (int i = 0; i < Inv.length; i++) {
             try {
-                if(Inv[i].getName().equals(itemName)){
+                if (Inv[i].getName().equals(itemName)) {
                     return i;
                 }
-            }catch (NullPointerException n){
+            } catch (NullPointerException n) {
                 System.out.println("Nullpointer");
             }
         }
         return -1;
     }
 
-    public void deleteItem(int index){
+    public void deleteItem(int index) {
         try {
             Inv[index] = null;
-        }catch (ArrayIndexOutOfBoundsException ab){
-            System.out.println("Item not found : "+ab);
+        } catch (ArrayIndexOutOfBoundsException ab) {
+            System.out.println("player.Item not found : " + ab);
         }
     }
 }

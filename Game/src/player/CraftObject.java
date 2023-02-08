@@ -1,3 +1,5 @@
+package player;
+
 /**
  * Created:
  *
@@ -7,27 +9,27 @@
 public class CraftObject {
 
     private Item returnItem;
-    private int[]checkPossible;
+    private int[] checkPossible;
 
     public CraftObject(Item returnItem, int[] checkPossible) {
         this.returnItem = returnItem;
         this.checkPossible = checkPossible;
     }
 
-    public boolean isCraftable(int[]toCheck){
+    public boolean isCraftable(int[] toCheck) {
         int count = 0;
         for (int i = 0; i < toCheck.length; i++) {
             if (toCheck[i] >= checkPossible[i]) {
                 count++;
             }
         }
-        if(count == toCheck.length){
+        if (count == toCheck.length) {
             return true;
         }
         return false;
     }
 
-    public Item craft(){
+    public Item craft() {
         return returnItem;
     }
 
