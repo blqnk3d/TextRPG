@@ -160,4 +160,24 @@ public class Inventory {
 
         return ret.toString();
     }
+    public  int findIndex(String itemName){
+        for (int i = 0; i < Inv.length; i++) {
+            try {
+                if(Inv[i].getName().equals(itemName)){
+                    return i;
+                }
+            }catch (NullPointerException n){
+                System.out.println("Nullpointer");
+            }
+        }
+        return -1;
+    }
+
+    public void deleteItem(int index){
+        try {
+            Inv[index] = null;
+        }catch (ArrayIndexOutOfBoundsException ab){
+            System.out.println("Item not found : "+ab);
+        }
+    }
 }

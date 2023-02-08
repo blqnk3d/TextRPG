@@ -5,13 +5,13 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
-
+    private final Craft craftClass = new Craft();
     private static final Enemy[] enemys = {
             new Enemy("Giant Rat", 15, 5, 10, 10, 15),
             new Enemy("Slime", 20, 10, 10, 10, 15),
-            new Enemy("Spiderling", 25, 5, 10, 15, 20),
+            new Enemy("Spiderling", 25, 5, 10, 15, 20), // Droppes String
             new Enemy("Goblin Scout", 30, 5, 10, 15, 20),
-            new Enemy("Skeleton Archer", 40, 15, 15, 20, 25),
+            new Enemy("Skeleton Archer", 40, 15, 15, 20, 25), // Lower chance to drop a Bone
             new Enemy("Zombie Minion", 50, 10, 20, 25, 30),
             new Enemy("Imp", 70, 20, 30, 35, 40),
             new Enemy("Kobold", 60, 15, 25, 30, 35),
@@ -19,7 +19,7 @@ public class Main {
             new Enemy("Skeleton Guard", 90, 30, 40, 45, 50)
     };
     private static Player player;
-    private final Inventory Inv = new Inventory();
+    private  Inventory Inv = new Inventory();
     private final Item[] ShopItems = {
             new Item("Low HealPot", 1, "heal0", 3, "Heals 1 % of YOUR ma Hp"),
             new Item("Mid HealPot", 1, "heal1", 5, "Heals 5 % of YOUR ma Hp"),
@@ -39,15 +39,25 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         Main game = new Main();
+        game.Inv.setItem(new Item("String",1,"default",0,"String dropped by a spiderling"));
+        game.Inv.setItem(new Item("Bone",1,"default",0,"Just a old bone"));
+
+        game.Inv.setItem(new Item("String",1,"default",0,"String dropped by a spiderling"));
+        game.Inv.setItem(new Item("Bone",1,"default",0,"Just a old bone"));
+
+        game.Inv.setItem(new Item("String",1,"default",0,"String dropped by a spiderling"));
+        game.Inv.setItem(new Item("Bone",1,"default",0,"Just a old bone"));
+
         String choose;
 
         while (true) {
             //ToDo Crafting Menu
-            System.out.println("List of commands: fight [f]   printhp [php]   quit [q]   shop [s]   inventory [inv]   useitem [ui] stats");
+            System.out.println("List of commands: fight [f] craft [c]  printhp [php]   quit [q]   shop [s]   inventory [inv]   useitem [ui] stats");
             choose = inputString("What do u wish to do ? : ").toLowerCase();
             switch (choose) {
+
+                case "craft","c"-> game.craft();
 
                 case "fight", "f" -> game.fight();
                 case "printhp", "php" -> game.getPlayer().printHealth();
@@ -76,6 +86,8 @@ public class Main {
                         player = game.Inv.getInv()[coords].useItem(player);
                     } catch (NullPointerException n) {
                         System.out.println("The is no item in that spot");
+                    }catch (ArrayIndexOutOfBoundsException ab){
+                        System.out.println("Not allowde in Input");
                     }
                     if (game.Inv.getInv()[coords].getAmount() - 1 <= 0) {
                         game.Inv.getInv()[coords] = null;
@@ -187,6 +199,15 @@ public class Main {
             player.levelUp();
         }
     }
+
+    public void craft(){
+        craftClass.setItemsCurrent(Inv.getInv());
+        craftClass.countItems();
+        craftClass.printAbleCrafts();
+        Inv = craftClass.craft(Inv);
+    }
+
+
 
     public Item shop(int input) {
         for (int i = 0; i < ShopItems.length; i++) {
