@@ -10,7 +10,7 @@ public class Player {
     private double defence;
     private double attackDmg;
 
-    private int lvl;
+    private int lvl = 150;
 
     private int maxExp;
 
@@ -29,6 +29,41 @@ public class Player {
         this.money = 0;
         this.maxExp = 100;
         this.maxlvl = 100;
+    }
+
+    public static void main(String[] args) {
+        Player player = new Player("blqnk3d");
+        player.printHealth();
+        player.setHp(90);
+        player.printHealth();
+        player.setHp(95);
+        player.printHealth();
+        player.setHp(110);
+        player.printHealth();
+
+    }
+
+    /**
+     * It takes a string and a width, and returns a string that is the original string centered in a string of the given
+     * width
+     *
+     * @param width The width of the entire string
+     * @param s     The string to be centered
+     * @return A string that is centered in a string of a given width.
+     */
+    public static String centerString(int width, String s) {
+        return String.format("%-" + width + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
+    }
+
+    public static String inputString(String msg) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print(msg);
+        try {
+            return scan.nextLine();
+        } catch (NoSuchElementException n) {
+            System.out.println("No Name detected : " + n);
+            return "";
+        }
     }
 
     /**
@@ -141,19 +176,6 @@ public class Player {
     }
 
     /**
-     * This function prints out the stats of the player
-     */
-    public void printStats() {
-        System.out.println("--------------------");
-        System.out.println(name + " -> " + "LvL[" + currentLvl + "]\n" +
-                "Current Health: " + hp + "\n"
-                + "Attack Stat : [" + attackDmg + "]\n"
-                + "Defence Stat : [" + defence + "]\n"
-                + "Current Money : [" + money + "]");
-        System.out.println("--------------------");
-    }
-
-    /**
      * It prints a barplot of the current health of the player
      */
     public void printHealth() {
@@ -168,6 +190,19 @@ public class Player {
      */
     public int getMaxExp() {
         return maxExp;
+    }
+
+    /**
+     * This function prints out the stats of the player
+     */
+    public void printStats() {
+        System.out.println("--------------------");
+        System.out.println(name + " -> " + "LvL[" + currentLvl + "]\n" +
+                "Current Health: " + hp + "\n"
+                + "Attack Stat : [" + Math.round(attackDmg) + "]\n"
+                + "Defence Stat : [" + Math.round(defence) + "]\n"
+                + "Current Money : [" + money + "]");
+        System.out.println("--------------------");
     }
 
     /**
@@ -197,18 +232,6 @@ public class Player {
         this.money = Math.max(money, 0);
     }
 
-    public static void main(String[] args) {
-        Player player = new Player("blqnk3d");
-        player.printHealth();
-        player.setHp(90);
-        player.printHealth();
-        player.setHp(95);
-        player.printHealth();
-        player.setHp(110);
-        player.printHealth();
-
-    }
-
     /**
      * If the player's level is greater than or equal to the maximum level, then the player's level is set to the remainder
      * of the player's level divided by the maximum level, the maximum level is multiplied by 1.5, the player's attack
@@ -219,35 +242,12 @@ public class Player {
         if (lvl >= this.maxlvl) {
             lvl -= maxlvl;
             this.maxlvl *= 1.5;
-            switch (inputString("Choose a stat you wannt to + 1% : \nAttack | Defence | MaxHP").toLowerCase()) {
+            switch (inputString("Choose a stat you want to + 1% : \nAttack | Defence | MaxHP : ").toLowerCase()) {
                 case "attack" -> this.attackDmg *= 1.01;
                 case "defence" -> this.defence *= 1.01;
                 case "health" -> this.maxHP *= 1.01;
             }
             currentLvl++;
-        }
-    }
-
-    /**
-     * It takes a string and a width, and returns a string that is the original string centered in a string of the given
-     * width
-     *
-     * @param width The width of the entire string
-     * @param s     The string to be centered
-     * @return A string that is centered in a string of a given width.
-     */
-    public static String centerString(int width, String s) {
-        return String.format("%-" + width + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
-    }
-
-    public static String inputString(String msg) {
-        Scanner scan = new Scanner(System.in);
-        System.out.print(msg);
-        try {
-            return scan.nextLine();
-        } catch (NoSuchElementException n) {
-            System.out.println("No Name detected : " + n);
-            return "";
         }
     }
 }

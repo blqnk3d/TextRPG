@@ -122,6 +122,9 @@ public class Enemy {
     public void setDefence(int defence) {
         this.defence = Math.max(this.defence, defence);
     }
+    public void setDefence(double defence) {
+        this.defence = Math.max(this.defence, defence);
+    }
 
     /**
      * This function returns the attack damage of the player.
@@ -138,6 +141,10 @@ public class Enemy {
      * @param attackDmg The amount of damage the weapon does.
      */
     public void setAttackDmg(int attackDmg) {
+        this.attackDmg = Math.max(this.attackDmg, attackDmg);
+    }
+
+    public void setAttackDmg(double attackDmg) {
         this.attackDmg = Math.max(this.attackDmg, attackDmg);
     }
 
@@ -200,6 +207,13 @@ public class Enemy {
 
     public static void main(String[] args) {
 
+    }
+    public void printStats() {
+        System.out.println("--------------------");
+        System.out.println( "Current Health: " + hp + "\n"
+                + "Attack Stat : [" + attackDmg + "]\n"
+                + "Defence Stat : [" + Math.round(defence) );
+        System.out.println("--------------------");
     }
 
 
