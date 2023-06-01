@@ -21,26 +21,6 @@ public class Inventory {
     }
 
     /**
-     * If the length of the string is less than the max, then fill the string with the character until it reaches the max
-     * length.
-     *
-     * @param num The number to be formatted.
-     * @param max The maximum length of the string.
-     * @param ch  The character to fill the string with.
-     * @return A string of the number with the character repeated to fill the max length.
-     */
-    public static String fill(String num, int max, char ch) {
-        StringBuilder ret = new StringBuilder();
-        if (num != null) {
-            ret = new StringBuilder(num);
-        }
-
-        ret.append(String.valueOf(ch).repeat(Math.max(0, max - num.length())));
-
-        return ret.toString();
-    }
-
-    /**
      * This function returns the value of the variable Inv.
      *
      * @return The array Inv is being returned.
@@ -102,12 +82,12 @@ public class Inventory {
             }
         }
         clearInv(); // Clears the inv and then adds the Items with the amount
-        /*
+
         for (int i = 0; i < ShopItems.length; i++) {
             System.out.println(count[i]);
             setItem(new Item(ShopItems[i].getName(), count[i], ShopItems[i].getType(), ShopItems[i].getPrice(), ShopItems[i].getDescription()));
         }
-*/
+
 
     }
 
@@ -160,6 +140,27 @@ public class Inventory {
             }
         }
         return -1;
+    }
+
+
+    /**
+     * If the length of the string is less than the max, then fill the string with the character until it reaches the max
+     * length.
+     *
+     * @param num The number to be formatted.
+     * @param max The maximum length of the string.
+     * @param ch  The character to fill the string with.
+     * @return A string of the number with the character repeated to fill the max length.
+     */
+    public static String fill(String num, int max, char ch) {
+        StringBuilder ret = new StringBuilder();
+        if (num != null) {
+            ret = new StringBuilder(num);
+        }
+
+        ret.append(String.valueOf(ch).repeat(Math.max(0, max - num.length())));
+
+        return ret.toString();
     }
 
     public int findIndex(String itemName) {
