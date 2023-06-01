@@ -209,19 +209,7 @@ public class Player {
     public void setMoney(int money) {
         this.money = Math.max(money, 0);
     }
-
-    public static void main(String[] args) {
-        Player player = new Player("blqnk3d");
-        player.printHealth();
-        player.setHp(90);
-        player.printHealth();
-        player.setHp(95);
-        player.printHealth();
-        player.setHp(110);
-        player.printHealth();
-
-    }
-
+    
     /**
      * If the player's level is greater than or equal to the maximum level, then the player's level is set to the remainder
      * of the player's level divided by the maximum level, the maximum level is multiplied by 1.5, the player's attack
@@ -232,7 +220,7 @@ public class Player {
         if (lvl >= this.maxlvl) {
             lvl -= maxlvl;
             this.maxlvl *= 1.5;
-            switch (inputString("Choose a stat you wannt to + 1% : \nAttack | Defence | MaxHP").toLowerCase()) {
+            switch (inputString("Choose a stat you want to + 1% : \nAttack | Defence | MaxHP : ").toLowerCase()) {
                 case "attack" -> this.attackDmg *= 1.01;
                 case "defence" -> this.defence *= 1.01;
                 case "health" -> this.maxHP *= 1.01;
