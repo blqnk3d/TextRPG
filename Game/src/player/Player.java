@@ -13,6 +13,7 @@ public class Player {
     private int lvl;
 
     private int maxExp;
+    private int currentExp;
 
     private int money;
 
@@ -144,13 +145,25 @@ public class Player {
      * This function prints out the stats of the player
      */
     public void printStats() {
-        System.out.println("--------------------");
-        System.out.println(name + " -> " + "LvL[" + currentLvl + "]\n" +
-                "Current Health: " + hp + "\n"
-                + "Attack Stat : [" + attackDmg + "]\n"
-                + "Defence Stat : [" + defence + "]\n"
-                + "Current Money : [" + money + "]");
-        System.out.println("--------------------");
+        StringBuilder ret = new StringBuilder();
+        ret.append("=================================================\n");
+        ret.append(String.format("| Name:%40s |\n",name));
+        ret.append(String.format("| Class:%39s |\n","CLASS"));
+        ret.append(String.format("| Level:%39s |\n",lvl));
+        ret.append(String.format("| Health:%38s |\n",Math.round(maxHP)+"/"+Math.round(hp)));
+        ret.append(String.format("| Attack:%38s |\n",Math.round(attackDmg)));
+        ret.append(String.format("| Defense:%37s |\n",Math.round(defence)));
+        ret.append(String.format("| Exp Pnts:%36s |\n",Math.round(maxExp)+"/"+Math.round(currentExp)));
+        ret.append(String.format("| Gold:%40s |\n",Math.round(money)));
+
+    /* /!
+        ret.append("| Weapon:   Sword of 1000 Truths  +125 attack  |\n");
+        ret.append("| Chest:    Blinding Breastplate  +90  defense |\n");
+        ret.append("| Helmet:   Crown of Death        +64  defense |\n");
+        ret.append("| Feet:     Hell's Sabatons       +60  defense |\n");
+     */
+        ret.append("=================================================");
+        System.out.println(ret);
     }
 
     /**

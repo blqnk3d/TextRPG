@@ -16,8 +16,8 @@ public class Main {
     private static final Enemy[] enemys = {
             new Enemy("Giant Rat", 15, 5, 10, 10, 15),
             new Enemy("Slime", 20, 10, 10, 10, 15),
-            new Enemy("Spiderling", 25, 5, 10, 15, 20,new ItemDropEnemy(5,new Item("String", 1, "default", 0, "String dropped by a spiderling"))), // Droppes String
-            new Enemy("Goblin Scout", 30, 5, 10, 15, 20,new ItemDropEnemy(2,new Item("Bone", 1, "default", 0, "Just a old bone"))),
+            new Enemy("Spiderling", 25, 5, 10, 15, 20, new ItemDropEnemy(5, new Item("String", 1, "default", 0, "String dropped by a spiderling"))), // Droppes String
+            new Enemy("Goblin Scout", 30, 5, 10, 15, 20, new ItemDropEnemy(2, new Item("Bone", 1, "default", 0, "Just a old bone"))),
             new Enemy("Skeleton Archer", 40, 15, 15, 20, 25), // Lower chance to drop a Bone
             new Enemy("Zombie Minion", 50, 10, 20, 25, 30),
             new Enemy("Imp", 70, 20, 30, 35, 40),
@@ -45,16 +45,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         Main game = new Main();
-        game.Inv.setItem(new Item("String", 1, "default", 0, "String dropped by a spiderling"));
-        game.Inv.setItem(new Item("Bone", 1, "default", 0, "Just a old bone"));
-
-        game.Inv.setItem(new Item("String", 1, "default", 0, "String dropped by a spiderling"));
-        game.Inv.setItem(new Item("Bone", 1, "default", 0, "Just a old bone"));
-
-        game.Inv.setItem(new Item("String", 1, "default", 0, "String dropped by a spiderling"));
-        game.Inv.setItem(new Item("Bone", 1, "default", 0, "Just a old bone"));
 
         String choose;
 
@@ -90,15 +81,15 @@ public class Main {
                     }
                     try {
                         player = game.Inv.getInv()[coords].useItem(player);
-                    if (game.Inv.getInv()[coords].getAmount() - 1 <= 0) {
-                        game.Inv.getInv()[coords] = null;
-                    } else {
-                        game.Inv.getInv()[coords].setAmount(game.Inv.getInv()[coords].getAmount() - 1);
-                    }
+                        if (game.Inv.getInv()[coords].getAmount() - 1 <= 0) {
+                            game.Inv.getInv()[coords] = null;
+                        } else {
+                            game.Inv.getInv()[coords].setAmount(game.Inv.getInv()[coords].getAmount() - 1);
+                        }
                     } catch (NullPointerException n) {
                         System.out.println("The is no item in that spot");
                     } catch (ArrayIndexOutOfBoundsException ab) {
-                        System.out.println("Not allowde in Input");
+                        System.out.println("Not allowed in Input");
                     }
                 }
                 case "debug" -> {
@@ -179,10 +170,10 @@ public class Main {
             }
 
             if (enemys[enemyFightIndex].isDead()) {
-                player.printHealth();
                 System.out.println("U won the fight !!!");
                 player.setMoney(player.getMoney() + enemys[enemyFightIndex].getCoins());
-                   Inv.setItem(enemys[enemyFightIndex].dropRoll());
+                Inv.setItem(enemys[enemyFightIndex].dropRoll());
+                player.printStats();
                 enemys[enemyFightIndex].reset();
                 break;
             } else if (player.isDead()) {

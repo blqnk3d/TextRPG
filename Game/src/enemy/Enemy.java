@@ -186,6 +186,15 @@ public class Enemy {
         this.coins = coins;
     }
 
+    public void printStats() {
+        System.out.println("--------------------");
+        System.out.println(name + " -> " +
+                "Current Health: " + hp + "\n"
+                + "Attack Stat : [" + attackDmg + "]\n"
+                + "Defence Stat : [" + defence + "]\n"
+                );
+        System.out.println("--------------------");
+    }
 
     public Item dropRoll(){
         if(drops != null){
